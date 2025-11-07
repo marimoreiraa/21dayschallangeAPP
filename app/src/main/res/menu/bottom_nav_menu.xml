@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/nav_challenge"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/challange"
         android:title="Desafio" />
 
     <item
@@ -22,6 +22,6 @@
 
     <item
         android:id="@+id/nav_profile"
-        android:icon="@drawable/arrow_back"
+        android:icon="@drawable/user"
         android:title="Perfil" />
 </menu>
