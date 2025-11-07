@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="Início"
+        />
+
+    <item
+        android:id="@+id/nav_progress"
+        android:icon="@drawable/progress"
+        android:title="Progresso" />
+
+    <item
+        android:id="@+id/nav_challenge"
+        android:icon="@drawable/logo"
+        android:title="Desafio" />
+
+    <item
+        android:id="@+id/nav_share"
+        android:icon="@drawable/share"
+        android:title="Compartilhar" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/arrow_back"
+        android:title="Perfil" />
+</menu>

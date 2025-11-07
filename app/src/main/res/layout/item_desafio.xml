@@ -1,0 +1,59 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:backgroundTint="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iconDesafio"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="Ícone desafio"
+            android:tint="@color/black"
+            android:src="@drawable/ic_launcher_foreground" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tituloDesafio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desafio de Hidratação"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/descricaoDesafio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beba a quantidade de água ideal e sinta a diferença em 3 semanas"
+                android:textColor="@color/gray"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnIniciar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iniciar"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/orange" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
