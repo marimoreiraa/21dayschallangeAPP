@@ -1,4 +1,58 @@
 package com.ifmg.a21dayschallangeapp;
 
-public class LoginActivity {
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class LoginActivity extends AppCompatActivity {
+    private EditText edtEmail, edtPassword;
+    private Button btnLogin;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        edtEmail = findViewById(R.id.inputEmail);
+        edtPassword = findViewById(R.id.inputSenha);
+        btnLogin = findViewById(R.id.btnEntrar);
+
+        SessionManager session = new SessionManager(this);
+        AuthController authController = new AuthController();
+
+        // Se o usuário já estiver logado, pula direto pra MainActivity
+        if (session.isLoggedIn()) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = edtEmail.getText().toString().trim();
+                String password = edtPassword.getText().toString().trim();
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (authController.login(email, password)) {
+                    session.createLoginSession(email);
+                    Toast.makeText(LoginActivity.this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Email ou senha incorretos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }

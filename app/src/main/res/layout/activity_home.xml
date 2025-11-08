@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".HomeActivity">
+    tools:context=".MainActivity">
 
     <!-- Barra superior -->
     <LinearLayout
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:menu="@menu/bottom_nav_menu"
-        app:itemIconTint="@null"
+        app:itemIconTint="@color/nav_item_color"
         app:itemTextColor="@color/nav_item_color"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
