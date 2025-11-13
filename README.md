@@ -23,7 +23,7 @@ Aplicação composta por um **backend Spring Boot** e um **aplicativo Android**,
 
 ## ⚙️ Requisitos
 
-- **Java 17+**
+- **Java 21+**
 - **Maven 3.8+**
 - **Android Studio (versão 2022.3+ ou superior)**
 - **Emulador Android** ou dispositivo físico com Android 9+
@@ -78,3 +78,4 @@ curl -X POST http://localhost:8080/api/auth/login \
 5. O app abrirá na tela de Login, permitindo:
    * Login com o usuário cadastrado via backend.
    * Registro de novos usuários diretamente pelo app.
+
