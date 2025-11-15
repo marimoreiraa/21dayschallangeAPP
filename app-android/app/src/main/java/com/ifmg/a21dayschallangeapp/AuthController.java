@@ -19,9 +19,10 @@ public class AuthController {
         }
     }
 
-    public boolean register(String email, String password) {
+    public boolean register(String name,String email, String password) {
         try {
             JSONObject body = new JSONObject();
+            body.put("name",name);
             body.put("email", email);
             body.put("password", password);
 
@@ -33,4 +34,22 @@ public class AuthController {
             return false;
         }
     }
+
+    public boolean requestPasswordReset(String email) {
+        try {
+            JSONObject body = new JSONObject();
+            body.put("email", email);
+
+            String response = ApiClient.post("/auth/reset-password-request", body.toString());
+            JSONObject json = new JSONObject(response);
+
+            return json.optBoolean("success", false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 }
