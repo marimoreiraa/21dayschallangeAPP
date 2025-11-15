@@ -66,7 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ex: Beber 2L de água por dia"
-                android:background="@drawable/edittext_background"
+                android:background="@color/white"
                 android:padding="12dp"
                 android:textColorHint="@color/gray"/>
 
@@ -134,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Explique seu desafio..."
-                android:background="@drawable/edittext_background"
+                android:background="@color/white"
                 android:minHeight="80dp"
                 android:gravity="top|start"
                 android:padding="12dp"
@@ -177,7 +177,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="space_between"
+                android:gravity=""
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="12dp">
 

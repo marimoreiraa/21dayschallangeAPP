@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtPassword;
     private Button btnLogin;
+    private TextView txtEsqueceu, txtCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,10 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.inputSenha);
         btnLogin = findViewById(R.id.btnEntrar);
 
+        // novos TextViews
+        txtEsqueceu = findViewById(R.id.textEsqueceu);
+        txtCadastrar = findViewById(R.id.textCadastrar);
+
         SessionManager session = new SessionManager(this);
         AuthController authController = new AuthController();
 
@@ -31,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+        // ====== LOGIN ======
         btnLogin.setOnClickListener(v -> {
             String email = edtEmail.getText().toString().trim();
             String password = edtPassword.getText().toString().trim();
@@ -57,6 +64,18 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             }).start();
+        });
+
+        // ====== AÇÃO "ESQUECEU A SENHA" ======
+        txtEsqueceu.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(intent);
+        });
+
+        // ====== AÇÃO "CADASTRE-SE" ======
+        txtCadastrar.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
     }
 }
