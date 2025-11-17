@@ -1,6 +1,6 @@
 # 🏋️‍♀️ 21DaysChallenge App
 
-Aplicação composta por um **backend Spring Boot** e um **aplicativo Android**, desenvolvidos para gerenciar desafios pessoais de 21 dias com login, registro de usuários e acompanhamento de progresso.
+Aplicação composta por um **backend em Node.js** e um **aplicativo Android**, desenvolvidos para gerenciar desafios pessoais de 21 dias com login, registro de usuários e acompanhamento de progresso.
 
 ---
 
@@ -8,9 +8,9 @@ Aplicação composta por um **backend Spring Boot** e um **aplicativo Android**,
 ```
 /21DaysChallengeAPP
 │
-├── backend21daysapp/ → API REST em Spring Boot
+├── backend/ → API em Node.js
 │ ├── src/
-│ ├── pom.xml
+│ ├── env/
 │ └── ...
 │
 └── app-android/ → Aplicativo Android (Java)
@@ -24,47 +24,27 @@ Aplicação composta por um **backend Spring Boot** e um **aplicativo Android**,
 ## ⚙️ Requisitos
 
 - **Java 21+**
-- **Maven 3.8+**
+- **Node JS**
 - **Android Studio (versão 2022.3+ ou superior)**
 - **Emulador Android** ou dispositivo físico com Android 9+
 
 ---
 
-## 🚀 Executando o Backend (Spring Boot)
+## 🚀 Executando o Backend (Node)
 
 * Acesse a pasta do backend:
 ```
-cd backend21daysapp
+cd backend
 ```
 * Compile e execute:
 
 ```
-mvn spring-boot:run
+npm run localhost
 ```
 * O servidor iniciará em:
 
 ```
 http://localhost:8080
-```
-
-## 🧑‍💻 Testando o Backend com cURL
-* Registro de Usuário
-```
-curl -X POST http://localhost:8080/api/auth/register \
--H "Content-Type: application/json" \
--d '{
-  "email": "teste@exemplo.com",
-  "password": "123456"
-}'
-```
-* Login de Usuário
-```
-curl -X POST http://localhost:8080/api/auth/login \
--H "Content-Type: application/json" \
--d '{
-  "email": "teste@exemplo.com",
-  "password": "123456"
-}'
 ```
 
  ## 📱 Executando o Aplicativo Android
@@ -78,4 +58,5 @@ curl -X POST http://localhost:8080/api/auth/login \
 5. O app abrirá na tela de Login, permitindo:
    * Login com o usuário cadastrado via backend.
    * Registro de novos usuários diretamente pelo app.
+
 
