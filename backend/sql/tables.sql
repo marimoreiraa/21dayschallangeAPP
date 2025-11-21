@@ -1,13 +1,22 @@
 -- ============================================
+-- Base de Dados
+-- ============================================
+CREATE DATABASE IF NOT EXISTS 21daysapp CHARACTER SET utf8 COLLATE utf8_general_ci
+
+-- ============================================
 -- TABELA: users
 -- Cadastro dos usuarios
 -- ============================================
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    username VARCHAR(100) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `userdata` text,
+  `lastLogin` datetime DEFAULT NULL,
+  `refreshToken` tinytext,
 );
+
 -- ============================================
 -- TABELA: suggested_challenges
 -- Desafios sugeridos pelo app
@@ -52,7 +61,6 @@ CREATE TABLE user_challenges (
 CREATE INDEX idx_userch_user ON user_challenges(user_id);
 CREATE INDEX idx_userch_suggested ON user_challenges(suggested_id);
 
-
 -- ============================================
 -- TABELA: challenge_daily_check
 -- Registro diário de presença (checkbox)
@@ -71,7 +79,6 @@ CREATE TABLE challenge_daily_check (
 CREATE UNIQUE INDEX idx_daily_unique 
     ON challenge_daily_check (user_challenge_id, date);
 
-
 -- ============================================
 -- TABELA: challenge_progress_history
 -- Histórico numérico de progresso (ex: litros, páginas etc)
@@ -89,7 +96,6 @@ CREATE TABLE challenge_progress_history (
 
 CREATE INDEX idx_progress_userchallenge 
     ON challenge_progress_history(user_challenge_id);
-
 
 -- ============================================
 -- TABELA: notifications (opcional)
