@@ -11,9 +11,9 @@ let auth = new Authentication(database)
 app.use(express.json())
 
 /* Account */
-app.post(`/api/v1/auth/register`, auth.register.bind(auth))
-app.post(`/api/v1/auth/login`, auth.login.bind(auth))
-app.post(`/api/v1/auth/refresh`, auth.refreshLogin.bind(auth))
+app.post(`/api/auth/register`, auth.register.bind(auth))
+app.post(`/api/auth/login`, auth.login.bind(auth))
+app.post(`/api/auth/refresh`, auth.refreshLogin.bind(auth))
 
 /* Cacth All */
 app.all(/.*/, placeholder)
