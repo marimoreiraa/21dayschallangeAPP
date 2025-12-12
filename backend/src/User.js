@@ -8,23 +8,19 @@ class User {
     }
 
     async checkIfExists(email) {
-        await this.#database.connect()
         let data = await this.#database.count(this.#table, `email = '${email}'`)
         return (data != 0)
     }
 
     async getById(id) {
-        await this.#database.connect()
         return await this.#database.read(this.#table, '*', `id = '${id}'`)
     }
 
     async getByEmail(email) {
-        await this.#database.connect()
         return await this.#database.read(this.#table, '*', `email = '${email}'`)
     }
 
     async getByEmailAndPassword(email, password) {
-        await this.#database.connect()
         return await this.#database.read(this.#table, '*', `email = '${email}' AND password = ${password}`)
     }
 
@@ -38,10 +34,12 @@ class User {
         if (await this.#database.create(this.#table, Object.keys(payload), Object.values(payload)))
             return true
 
-        return false
-            
+        return false       
     }
 
+    async updateLastLogin(id){
+        return await this.#database.update(this.#table, "lastLogin", new Date().toISOString().slice(0, 19).replace('T', ' '), `id = ${id}`)
+    }
 }
 
 module.exports = User

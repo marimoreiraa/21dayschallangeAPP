@@ -24,10 +24,11 @@ class Account {
     async register(req, res) {
 
         let data = req.body
-        let user = new User(this.#database)
-
+        
         if (!await this.#validateRegistrationPayload(data))
             return HttpResponse.sendMessage(res, 400, "Invalid request body: username, email and password are mandatory.")
+        
+        let user = new User(this.#database)
 
         if (await user.checkIfExists(data.email))
             return HttpResponse.sendMessage(res, 409, "User already registered")
@@ -37,7 +38,6 @@ class Account {
 
         HttpResponse.sendMessage(res, 500)
     }
-
 
     async login(req, res) {
 
@@ -50,18 +50,21 @@ class Account {
         let result = await user.getByEmail(data.email)
 
         if (!result || result.length > 1)
-            HttpResponse.sendMessage(res, 500)
+            return HttpResponse.sendMessage(res, 500)
 
         if (result.length == 0)
             return HttpResponse.sendMessage(res, 401, "User not registered")
 
-        if (result[0].password != data.password)
+        result = result[0]
+
+        if (result.password != data.password)
             return HttpResponse.sendMessage(res, 401, "Invalid credentials")
+
+        user.updateLastLogin(result.id)
 
         const jwtToken = jwt.sign({ userId: result.id }, this.#AUTH_SECRET, { expiresIn: '1h' })
 
         return HttpResponse.sendPayload(res, 200, { success: true, token: jwtToken })
-
     }
 
     async refreshLogin(req, res) {
