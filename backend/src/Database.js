@@ -23,39 +23,45 @@ class Database {
         await this.#connection.end()
     }
 
-    async create(table, columns, values) {
+    async query(queryString) {
+        console.log(queryString)
         await this.connect()
+        return this.#connection.query(queryString)
+    }
 
+    async create(table, columns, values) {
         let cols = Object.values(columns).join(", ")
         let vals = Object.values(values).map((value) => `'${value}'`).join(", ")
-
         let query = `INSERT INTO ${table} (${cols}) VALUES (${vals})`
         let results = await this.#connection.query(query)
+
         console.log(results)
         return true
     }
 
     async read(table, columns, conditions) {
-        await this.connect()
         let query = `SELECT ${columns} FROM ${table} ${(conditions) ? "WHERE " + conditions : ""}`
         let [results] = await this.#connection.query(query)
+
         return results
     }
 
     async update(table, columns, values, where) {
-
+        let set = [columns].map((k, i) => `${k}='${[values][i]}'`).join(',');
+        let query = `UPDATE ${table} SET ${set} WHERE ${where}`
+        let [results] = await this.query(query)
+        
+        return results
     }
 
     async delete(from, where) {
 
     }
 
-    async count(table, conditions){
-
+    async count(table, conditions) {
         console.log(`conditions = ${conditions}`)
-
-        await this.connect()
         let [result] = await this.#connection.query(`SELECT count(1) AS count from ${table} ${(conditions) ? "WHERE " + conditions : ""}`)
+        
         return result[0].count
     }
 }
