@@ -24,8 +24,11 @@ function placeholder(req, res){
 }
 
 function setup(){
-    app.listen(process.env.PORT, process.env.HOST)
-    console.log(`> 21DaysApp Backend running on ${process.env.HOST}:${process.env.PORT}`)
+    let port = process.env.PORT || 3100
+    let host = process.env.HOST || "0.0.0.0"
+
+    app.listen(port, host)
+    console.log(`> 21DaysApp Backend running on ${host}:${port}`)
 }
 
 setup()
