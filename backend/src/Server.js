@@ -1,12 +1,14 @@
 const Authentication = require('./Authentication.js')
+const Challenges = require('./Challenges.js')
 const Database = require('./Database.js')
+const HttpResponse = require('./HttpResponse.js')
 
 const express = require('express')
-const HttpResponse = require('./HttpResponse.js')
 const app = express()
 
 let database = new Database()
 let auth = new Authentication(database)
+let challenges = new Challenges(database)
 
 app.use(express.json())
 
@@ -14,6 +16,14 @@ app.use(express.json())
 app.post(`/api/auth/register`, auth.register.bind(auth))
 app.post(`/api/auth/login`, auth.login.bind(auth))
 app.post(`/api/auth/refresh`, auth.refreshLogin.bind(auth))
+
+/* Challenges */
+app.get('/api/challenges/suggested', challenges.getSuggested.bind(challenges))
+app.get('/api/challenges/user', challenges.getUserChallenges.bind(challenges))
+app.get('/api/challenges/check', challenges.getDailyCheck.bind(challenges))
+app.get('/api/challenges/progress', challenges.getProgressHistory.bind(challenges))
+app.get('/api/challenges/notifications', challenges.getNotifications.bind(challenges))
+
 
 /* Cacth All */
 app.all(/.*/, placeholder)
@@ -28,6 +38,7 @@ function setup(){
     let host = process.env.HOST || "0.0.0.0"
 
     app.listen(port, host)
+    console.clear()
     console.log(`> 21DaysApp Backend running on ${host}:${port}`)
 }
 
