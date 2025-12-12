@@ -1,6 +1,11 @@
 package com.ifmg.a21dayschallangeapp;
 
+import android.util.Log;
+
 import org.json.JSONObject;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 public class AuthController {
 
@@ -8,27 +13,31 @@ public class AuthController {
         try {
             JSONObject body = new JSONObject();
             body.put("email", email);
-            body.put("password", password);
+            body.put("password", hashPassword(password));
 
-            String response = ApiClient.post("/auth/login", body.toString());
-            JSONObject json = new JSONObject(response);
-            return json.optBoolean("success", false);
+            JSONObject response = ApiClient.post("/auth/login", body.toString());
+            return (response.getInt("code") == 200);
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
-    public boolean register(String name,String email, String password) {
+    public boolean register(String name, String email, String password) {
         try {
             JSONObject body = new JSONObject();
-            body.put("name",name);
+            body.put("username",name);
             body.put("email", email);
-            body.put("password", password);
+            body.put("password", hashPassword(password));
 
-            String response = ApiClient.post("/auth/register", body.toString());
-            JSONObject json = new JSONObject(response);
-            return json.optBoolean("success", false);
+            JSONObject response = ApiClient.post("/auth/register", body.toString());
+
+            Log.i("mylog.AuthController.register", body.toString());
+            Log.i("mylog.AuthController.register", response.toString(2));
+
+            return (response.getInt("code") == 200);
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -40,16 +49,30 @@ public class AuthController {
             JSONObject body = new JSONObject();
             body.put("email", email);
 
-            String response = ApiClient.post("/auth/reset-password-request", body.toString());
-            JSONObject json = new JSONObject(response);
+            JSONObject response = ApiClient.post("/auth/reset-password-request", body.toString());
+            return response.optBoolean("success", false);
 
-            return json.optBoolean("success", false);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
+    private String hashPassword(String password){
 
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            StringBuilder hex = new StringBuilder();
+            for (byte b : md.digest(password.getBytes(StandardCharsets.UTF_8))){
+                hex.append(String.format("%02x", b));
+            }
+            return hex.toString();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "";
+    }
 
 }

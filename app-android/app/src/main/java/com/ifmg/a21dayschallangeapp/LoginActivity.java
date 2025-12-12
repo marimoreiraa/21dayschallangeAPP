@@ -32,10 +32,10 @@ public class LoginActivity extends AppCompatActivity {
         AuthController authController = new AuthController();
 
         // Se o usuário já estiver logado, pula direto pra MainActivity
-        if (session.isLoggedIn()) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
+        //if (session.isLoggedIn()) {
+        //    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        //    finish();
+        //}
 
         // ====== LOGIN ======
         btnLogin.setOnClickListener(v -> {

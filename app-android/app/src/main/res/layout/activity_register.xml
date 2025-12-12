@@ -115,31 +115,19 @@
         app:layout_constraintEnd_toEndOf="@id/inputEmail" />
 
     <!-- Campo Data de Nascimento -->
-    <EditText
-        android:id="@+id/inputDataNascimento"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Data de nascimento (DD/MM/AAAA)"
-        android:background="@drawable/edit_text_background"
-        android:padding="14dp"
-        android:inputType="date"
-        app:layout_constraintTop_toBottomOf="@id/inputSenha"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@id/inputSenha"
-        app:layout_constraintEnd_toEndOf="@id/inputSenha" />
 
     <!-- Botão Registrar -->
     <Button
         android:id="@+id/btnRegistrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/orange"
+        android:paddingVertical="1dp"
         android:text="Registrar"
         android:textColor="@color/white"
-        android:backgroundTint="@color/orange"
-        android:paddingVertical="10dp"
-        app:layout_constraintTop_toBottomOf="@id/inputDataNascimento"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="@id/inputDataNascimento"
-        app:layout_constraintEnd_toEndOf="@id/inputDataNascimento" />
+        app:layout_constraintEnd_toEndOf="@+id/inputSenha"
+        app:layout_constraintStart_toStartOf="@+id/inputSenha"
+        app:layout_constraintTop_toBottomOf="@+id/inputSenha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

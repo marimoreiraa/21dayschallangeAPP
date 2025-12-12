@@ -1,36 +1,47 @@
 package com.ifmg.a21dayschallangeapp;
 
+import android.util.Log;
+
+import org.json.JSONObject;
+
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.MediaType;
+import okhttp3.Response;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://172.20.10.3:8080/api"; // emulador Android -> localhost
+    private static final String BASE_URL = "http://192.168.0.160:3100/api"; // emulador Android -> localhost
 
-    public static String post(String endpoint, String jsonBody) {
+    public static JSONObject post(String endpoint, String jsonBody) {
+
+        Log.i("mylog.ApiClient,post", BASE_URL + endpoint);
+
         try {
-            URL url = new URL(BASE_URL + endpoint);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json; utf-8");
-            conn.setDoOutput(true);
+            OkHttpClient client = new OkHttpClient();
+            RequestBody body = RequestBody.create(jsonBody, MediaType.get("application/json; charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url(BASE_URL + endpoint)
+                    .post(body)
+                    .build();
 
-            try (OutputStream os = conn.getOutputStream()) {
-                os.write(jsonBody.getBytes("utf-8"));
-            }
+            Response response = client.newCall(request).execute();
+            Log.i("mylog.ApiClient.post.response", response.toString());
 
-            Scanner sc = new Scanner(conn.getInputStream());
-            StringBuilder response = new StringBuilder();
-            while (sc.hasNext()) {
-                response.append(sc.nextLine());
-            }
-            sc.close();
-            return response.toString();
+            JSONObject json = new JSONObject(response.body().string());
+            Log.i("mylog.ApiClient.post.json", json.toString());
+
+            return json;
+
         } catch (Exception e) {
             e.printStackTrace();
-            return "{\"success\": false, \"error\": \"" + e.getMessage() + "\"}";
         }
+
+        return null;
     }
 }

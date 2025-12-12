@@ -7,6 +7,8 @@ class HttpResponse {
     }
 
     static sendPayload(res, status, payload) {
+        payload.code = status
+        console.log(payload)
         res.status(status).send(payload)
     }
 
