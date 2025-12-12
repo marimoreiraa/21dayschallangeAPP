@@ -17,6 +17,9 @@ async function main() {
         console.log("creating database...")
         await connection.query(fs.readFileSync(path.join(__dirname, 'tables.sql'), 'utf8'))
 
+        console.log("populating database...")
+        await connection.query(fs.readFileSync(path.join(__dirname, 'populate.sql'), 'utf8'))
+
         await connection.end()
     }
     catch (err) {
