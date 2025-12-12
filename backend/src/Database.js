@@ -33,7 +33,7 @@ class Database {
         let cols = Object.values(columns).join(", ")
         let vals = Object.values(values).map((value) => `'${value}'`).join(", ")
         let query = `INSERT INTO ${table} (${cols}) VALUES (${vals})`
-        let results = await this.#connection.query(query)
+        let results = await this.query(query)
 
         console.log(results)
         return true
@@ -41,7 +41,7 @@ class Database {
 
     async read(table, columns, conditions) {
         let query = `SELECT ${columns} FROM ${table} ${(conditions) ? "WHERE " + conditions : ""}`
-        let [results] = await this.#connection.query(query)
+        let [results] = await this.query(query)
 
         return results
     }
@@ -50,7 +50,7 @@ class Database {
         let set = [columns].map((k, i) => `${k}='${[values][i]}'`).join(',');
         let query = `UPDATE ${table} SET ${set} WHERE ${where}`
         let [results] = await this.query(query)
-        
+
         return results
     }
 
@@ -60,8 +60,8 @@ class Database {
 
     async count(table, conditions) {
         console.log(`conditions = ${conditions}`)
-        let [result] = await this.#connection.query(`SELECT count(1) AS count from ${table} ${(conditions) ? "WHERE " + conditions : ""}`)
-        
+        let [result] = await this.query(`SELECT count(1) AS count from ${table} ${(conditions) ? "WHERE " + conditions : ""}`)
+
         return result[0].count
     }
 }
