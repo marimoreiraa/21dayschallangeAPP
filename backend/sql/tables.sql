@@ -1,27 +1,42 @@
 -- ============================================
 -- Base de Dados
 -- ============================================
-CREATE DATABASE IF NOT EXISTS 21daysapp CHARACTER SET utf8 COLLATE utf8_general_ci
+CREATE DATABASE IF NOT EXISTS `21daysapp` CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE `21daysapp`;
 
 -- ============================================
 -- TABELA: users
 -- Cadastro dos usuarios
 -- ============================================
 CREATE TABLE IF NOT EXISTS users (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `email` varchar(64) NOT NULL,
   `password` varchar(64) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `userdata` text,
   `lastLogin` datetime DEFAULT NULL,
-  `refreshToken` tinytext,
+  `refreshToken` tinytext
 );
+
+-- ============================================
+-- TABELA: password_reset
+-- Registro de recuperação de senha
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS password_reset (
+  `id` int(11) AUTO_INCREMENT PRIMARY KEY,
+  `userId` int(11) NOT NULL,
+  `used` tinyint(1) NOT NULL,
+  `requestedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `expiresIn` timestamp NOT NULL DEFAULT current_timestamp(),
+  `code` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ============================================
 -- TABELA: suggested_challenges
 -- Desafios sugeridos pelo app
 -- ============================================
-CREATE TABLE suggested_challenges (
+CREATE TABLE IF NOT EXISTS suggested_challenges (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
     description TEXT,
@@ -37,7 +52,7 @@ CREATE TABLE suggested_challenges (
 -- TABELA: user_challenges
 -- Desafios iniciados pelo usuário (sugeridos ou personalizados)
 -- ============================================
-CREATE TABLE user_challenges (
+CREATE TABLE IF NOT EXISTS user_challenges (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     suggested_id INT NULL,
@@ -58,14 +73,14 @@ CREATE TABLE user_challenges (
 );
 
 -- Índices recomendados:
-CREATE INDEX idx_userch_user ON user_challenges(user_id);
-CREATE INDEX idx_userch_suggested ON user_challenges(suggested_id);
+CREATE INDEX IF NOT EXISTS idx_userch_user ON user_challenges(user_id);
+CREATE INDEX IF NOT EXISTS idx_userch_suggested ON user_challenges(suggested_id);
 
 -- ============================================
 -- TABELA: challenge_daily_check
 -- Registro diário de presença (checkbox)
 -- ============================================
-CREATE TABLE challenge_daily_check (
+CREATE TABLE IF NOT EXISTS challenge_daily_check (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_challenge_id INT NOT NULL,
     date DATE NOT NULL,
@@ -76,14 +91,14 @@ CREATE TABLE challenge_daily_check (
 );
 
 -- Para evitar duplicação de registros no mesmo dia:
-CREATE UNIQUE INDEX idx_daily_unique 
+CREATE UNIQUE INDEX IF NOT EXISTS idx_daily_unique 
     ON challenge_daily_check (user_challenge_id, date);
 
 -- ============================================
 -- TABELA: challenge_progress_history
 -- Histórico numérico de progresso (ex: litros, páginas etc)
 -- ============================================
-CREATE TABLE challenge_progress_history (
+CREATE TABLE IF NOT EXISTS challenge_progress_history (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_challenge_id INT NOT NULL,
     date DATE NOT NULL,
@@ -94,14 +109,14 @@ CREATE TABLE challenge_progress_history (
         ON DELETE CASCADE
 );
 
-CREATE INDEX idx_progress_userchallenge 
+CREATE INDEX IF NOT EXISTS idx_progress_userchallenge 
     ON challenge_progress_history(user_challenge_id);
 
 -- ============================================
 -- TABELA: notifications (opcional)
 -- Horários e mensagens para enviar lembretes
 -- ============================================
-CREATE TABLE notifications (
+CREATE TABLE IF NOT EXISTS notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_challenge_id INT NOT NULL,
     time TIME NOT NULL,
@@ -111,5 +126,5 @@ CREATE TABLE notifications (
         ON DELETE CASCADE
 );
 
-CREATE INDEX idx_notif_userchallenge 
+CREATE INDEX IF NOT EXISTS idx_notif_userchallenge 
     ON notifications(user_challenge_id);
