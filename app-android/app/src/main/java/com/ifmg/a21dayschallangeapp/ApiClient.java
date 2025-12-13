@@ -16,11 +16,11 @@ import okhttp3.Response;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://192.168.0.160:3100/api"; // emulador Android -> localhost
+    private static final String BASE_URL = "http://195.200.2.145:3100/api"; // emulador Android -> localhost
 
     public static JSONObject post(String endpoint, String jsonBody) {
 
-        Log.i("mylog.ApiClient,post", BASE_URL + endpoint);
+        Log.i("mylog.ApiClient.post", BASE_URL + endpoint);
 
         try {
             OkHttpClient client = new OkHttpClient();
