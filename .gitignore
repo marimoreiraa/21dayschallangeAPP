@@ -1,0 +1,113 @@
+# =========================
+# GLOBAL CONFIG
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+.factorypath
+
+# =========================
+# BACKEND (Spring Boot)
+# =========================
+HELP.md
+target/
+build/
+out/
+.mvn/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+# IntelliJ e STS
+.sts4-cache
+.springBeans
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# =========================
+# ANDROID APP
+# =========================
+.gradle/
+local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+outputs/
+
+# =========================
+# OS & ENV FILES
+# =========================
+# Linux / macOS / Windows temp
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Environment / credentials
+*.env
+.env.*
+**/application-dev.yml
+**/application-prod.yml
+**/application-local.yml
+**/application.properties
+
+# =========================
+# LOGS
+# =========================
+*.log
+/logs/
+/backend/logs/
+/app-android/logs/
+
+# =========================
+# OTHERS
+# =========================
+# Backup files
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Crashlytics / Firebase / Android specific
+fabric.properties
+crashlytics-build.properties
+google-services.json
+
+# =========================
+# OPTIONAL
+# =========================
+# Uncomment if you use Node/React in backend or Android hybrid
+# node_modules/
+# dist/

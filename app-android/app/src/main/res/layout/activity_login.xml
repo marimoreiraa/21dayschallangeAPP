@@ -1,0 +1,134 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".LoginActivity">
+
+    <!-- Logo do app -->
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Fundo branco arredondado (parte inferior) -->
+    <View
+        android:id="@+id/bgWhite"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_white_rounded"
+        app:layout_constraintTop_toBottomOf="@id/logoImg"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Texto de saudação -->
+    <TextView
+        android:id="@+id/textOla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Olá,"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/bgWhite"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Subtítulo -->
+    <TextView
+        android:id="@+id/textSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entre e crie novas metas!"
+        android:textSize="14sp"
+        android:textColor="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/textOla"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp" />
+
+    <!-- Campo email -->
+    <EditText
+        android:id="@+id/inputEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:background="@drawable/edit_text_background"
+        android:padding="14dp"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/textSub"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.85" />
+
+    <!-- Campo Senha -->
+    <EditText
+        android:id="@+id/inputSenha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:background="@drawable/edit_text_background"
+        android:padding="14dp"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/inputEmail"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/inputEmail"
+        app:layout_constraintEnd_toEndOf="@id/inputEmail" />
+
+    <!-- Botão Entrar -->
+    <Button
+        android:id="@+id/btnEntrar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Entrar"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/orange"
+        android:paddingVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/inputSenha"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/inputEmail"
+        app:layout_constraintEnd_toEndOf="@id/inputEmail" />
+
+    <!-- Esqueceu a senha -->
+    <TextView
+        android:id="@+id/textEsqueceu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esqueceu sua senha?"
+        android:textColor="@color/gray"
+        android:textSize="13sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/btnEntrar"
+        app:layout_constraintStart_toStartOf="@id/btnEntrar"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/btnEntrar" />
+
+    <!-- Cadastre-se -->
+    <TextView
+        android:id="@+id/textCadastrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastre-se"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/textEsqueceu"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/inputEmail"
+        app:layout_constraintEnd_toEndOf="@id/inputEmail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

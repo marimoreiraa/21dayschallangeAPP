@@ -1,0 +1,27 @@
+{
+  "name": "backend-nodejs",
+  "version": "1.0.0",
+  "description": "21 Days Challenge App Backend",
+  "main": "Server.js",
+  "scripts": {
+    "localhost": "node --env-file=env/localhost.env ./src/Server.js",
+    "local-mon": "nodemon ./src/Server.js",
+    "database-setup": "node --env-file=env/localhost.env ./sql/DatabaseSetup.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marimoreiraa/21dayschallangeAPP.git"
+  },
+  "author": "João Ricardo S. Teixeira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marimoreiraa/21dayschallangeAPP/issues"
+  },
+  "homepage": "https://github.com/marimoreiraa/21dayschallangeAPP#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.15.3",
+    "nodemon": "^3.1.11"
+  }
+}

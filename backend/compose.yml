@@ -1,0 +1,54 @@
+services:
+    backend:
+      container_name: 21daysapp.backend
+      build:
+        context: .
+        dockerfile: Dockerfile.server
+      environment:
+        PORT: 3000
+        HOST: 0.0.0.0
+        DB_HOST: 21daysapp.mysql
+        DB_USER: 21daysapp
+        DB_PASS: 21daysapp
+        DB_NAME: 21daysapp
+      networks:
+        - proxy
+      ports:
+        - "3100:3000"
+
+    mysql:
+      container_name: 21daysapp.mysql
+      restart: unless-stopped
+      image: mysql:8
+      environment:
+        MYSQL_ROOT_PASSWORD: 21dayschallengeappdatabase
+        MYSQL_DATABASE: 21daysapp
+        MYSQL_USER: 21daysapp
+        MYSQL_PASSWORD: 21daysapp
+      volumes:
+        - mysql:/var/lib/mysql
+      networks:
+        - proxy
+      ports:            
+        - "3306:3306"
+
+    phpmyadmin:
+      container_name: 21daysapp.phpmyadmin
+      restart: unless-stopped
+      image: phpmyadmin/phpmyadmin
+      environment:
+        PMA_HOST: mysql
+        MYSQL_ROOT_PASSWORD: 1234
+      depends_on:
+        - mysql
+      ports:
+      - "3101:80"
+      networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  mysql:
