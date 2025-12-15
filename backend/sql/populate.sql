@@ -1,4 +1,4 @@
-INSERT INTO users (email, password, username, "lastLogin", "refreshToken") VALUES
+INSERT INTO users (email, password, username, `lastLogin`, `refreshToken`) VALUES
 ('alice@example.com', 'hash1', 'alice', '2025-01-10 12:30:00', NULL),
 ('bob@example.com', 'hash2', 'bob', '2025-01-11 09:20:00', NULL),
 ('carol@example.com', 'hash3', 'carol', '2025-01-08 17:50:00', NULL),
@@ -10,7 +10,7 @@ INSERT INTO users (email, password, username, "lastLogin", "refreshToken") VALUE
 ('irene@example.com', 'hash9', 'irene', '2025-01-03 19:40:00', NULL),
 ('john@example.com', 'hash10', 'john', '2025-01-02 13:15:00', NULL);
 
-INSERT INTO password_reset ("userId", used, "requestedAt", "expiresIn", code) VALUES
+INSERT INTO password_reset (`userId`, used, `requestedAt`, `expiresIn`, code) VALUES
 (1, 0, '2025-01-10 12:35:00', '2025-01-10 13:35:00', 'PRC001'),
 (2, 1, '2025-01-11 09:15:00', '2025-01-11 10:15:00', 'PRC002'),
 (3, 0, '2025-01-08 17:45:00', '2025-01-08 18:45:00', 'PRC003'),

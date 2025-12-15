@@ -13,7 +13,10 @@ async function main() {
         }
         connection = await mysql.createConnection(config)
 
-        /* Create Database */
+        /* Drop and Create Database */
+        console.log("dropping database if it exists...")
+        await connection.query(`DROP DATABASE IF EXISTS \`21daysapp\`;`);
+
         console.log("creating database...")
         await connection.query(fs.readFileSync(path.join(__dirname, 'tables.sql'), 'utf8'))
 

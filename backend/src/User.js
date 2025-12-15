@@ -1,7 +1,7 @@
 class User {
 
     #database
-    #table = "USERS"
+    #table = "users"
 
     constructor(database) {
         this.#database = database

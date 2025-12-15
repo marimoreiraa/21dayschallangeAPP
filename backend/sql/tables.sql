@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS user_challenges (
 );
 
 -- Índices recomendados:
-CREATE INDEX IF NOT EXISTS idx_userch_user ON user_challenges(user_id);
-CREATE INDEX IF NOT EXISTS idx_userch_suggested ON user_challenges(suggested_id);
+CREATE INDEX idx_userch_user ON user_challenges(user_id);
+CREATE INDEX idx_userch_suggested ON user_challenges(suggested_id);
 
 -- ============================================
 -- TABELA: challenge_daily_check
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS challenge_daily_check (
 );
 
 -- Para evitar duplicação de registros no mesmo dia:
-CREATE UNIQUE INDEX IF NOT EXISTS idx_daily_unique 
+CREATE UNIQUE INDEX idx_daily_unique 
     ON challenge_daily_check (user_challenge_id, date);
 
 -- ============================================
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS challenge_progress_history (
         ON DELETE CASCADE
 );
 
-CREATE INDEX IF NOT EXISTS idx_progress_userchallenge 
+CREATE INDEX idx_progress_userchallenge 
     ON challenge_progress_history(user_challenge_id);
 
 -- ============================================
@@ -126,5 +126,5 @@ CREATE TABLE IF NOT EXISTS notifications (
         ON DELETE CASCADE
 );
 
-CREATE INDEX IF NOT EXISTS idx_notif_userchallenge 
+CREATE INDEX idx_notif_userchallenge 
     ON notifications(user_challenge_id);
