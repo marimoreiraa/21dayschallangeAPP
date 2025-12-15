@@ -39,23 +39,41 @@ class Database {
         return true
     }
 
-    async read(table, columns, conditions) {
+    async read(table, columns, conditions, orderBy = null) {
         let query = `SELECT ${columns} FROM ${table} ${(conditions) ? "WHERE " + conditions : ""}`
+        if (orderBy) {
+            query += ` ORDER BY ${orderBy}`
+        }
         let [results] = await this.query(query)
 
         return results
     }
 
-    async update(table, columns, values, where) {
-        let set = [columns].map((k, i) => `${k}='${[values][i]}'`).join(',');
-        let query = `UPDATE ${table} SET ${set} WHERE ${where}`
+    async update(table, columnsAndValues, where) {
+        // columnsAndValues should be an object like { column1: value1, column2: value2 }
+        let setClauses = Object.keys(columnsAndValues).map(key => {
+            let value = columnsAndValues[key];
+            if (typeof value === 'string') {
+                return `${key} = '${value}'`;
+            } else if (typeof value === 'boolean') {
+                return `${key} = ${value ? 1 : 0}`;
+            } else if (value === null) {
+                return `${key} = NULL`;
+            }
+            return `${key} = ${value}`;
+        }).join(', ');
+
+        let query = `UPDATE ${table} SET ${setClauses} WHERE ${where}`;
+        let [results] = await this.query(query);
+
+        return results;
+    }
+
+    async delete(table, where) {
+        let query = `DELETE FROM ${table} WHERE ${where}`
         let [results] = await this.query(query)
 
         return results
-    }
-
-    async delete(from, where) {
-
     }
 
     async count(table, conditions) {

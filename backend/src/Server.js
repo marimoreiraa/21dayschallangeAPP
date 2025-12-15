@@ -23,6 +23,19 @@ app.get('/api/challenges/user', challenges.getUserChallenges.bind(challenges))
 app.get('/api/challenges/check', challenges.getDailyCheck.bind(challenges))
 app.get('/api/challenges/progress', challenges.getProgressHistory.bind(challenges))
 app.get('/api/challenges/notifications', challenges.getNotifications.bind(challenges))
+// New routes for updating and deleting user challenges
+app.put('/api/challenges/user/:id', challenges.updateUserChallenge.bind(challenges))
+app.delete('/api/challenges/user/:id', challenges.deleteUserChallenge.bind(challenges))
+// New route for marking daily challenge as completed
+app.post('/api/challenges/user/:id/check', challenges.markDailyChallengeCompleted.bind(challenges))
+// New route for getting user's daily challenge status
+app.get('/api/challenges/user/daily-status', challenges.getUserDailyStatus.bind(challenges))
+// New route for recording challenge progress
+app.post('/api/challenges/user/:id/progress', challenges.recordChallengeProgress.bind(challenges))
+// New route for getting user statistics
+app.get('/api/challenges/user/statistics', challenges.getUserStatistics.bind(challenges))
+// New route for getting challenge progress history
+app.get('/api/challenges/user/:id/progress-history', challenges.getChallengeProgressHistory.bind(challenges))
 
 
 /* Cacth All */
