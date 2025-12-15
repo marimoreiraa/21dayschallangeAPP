@@ -183,6 +183,8 @@ class Challenges {
                 return HttpResponse.sendError(res, 500, "Failed to update daily challenge status.")
             }
         } catch (error) {
+            console.error("Error marking daily challenge completed:", error)
+            return HttpResponse.sendError(res, 500, "Internal server error.")
         }
     }
 
