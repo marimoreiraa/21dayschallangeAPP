@@ -89,3 +89,44 @@ Este projeto inclui as seguintes funcionalidades:
 
 *   **Obter Estatísticas do Usuário:** `GET /api/challenges/user/statistics`
     *   Recupera estatísticas agregadas para o usuário autenticado, incluindo o total de desafios ativos, o total de desafios concluídos e o total de verificações diárias concluídas. Requer autenticação.
+
+---
+
+## 💡 Sugestões de Melhoria
+
+Esta seção lista sugestões de melhorias para o projeto, focando em segurança, manutenibilidade e boas práticas.
+
+### 1. Prevenção de SQL Injection
+
+*   **Impacto:** Crítico. A concatenação direta de strings em consultas SQL sem parametrização torna a aplicação vulnerável a ataques de injeção de SQL.
+*   **Ação Sugerida:** Modificar a classe `Database` para utilizar consultas parametrizadas (`connection.execute` do `mysql2/promise`) em todas as operações (CREATE, READ, UPDATE, DELETE, COUNT).
+
+### 2. Tratamento de Erros Internos no Banco de Dados
+
+*   **Impacto:** Médio. Melhora a observabilidade e o tratamento de falhas.
+*   **Ação Sugerida:** Adicionar blocos `try-catch` explícitos dentro do método `query` da classe `Database` para registrar erros de banco de dados internamente antes de propagá-los.
+
+### 3. Log de Consultas SQL Controlado
+
+*   **Impacto:** Baixo. Evita vazamento de dados sensíveis e reduz a verbosidade em produção.
+*   **Ação Sugerida:** Proteger o `console.log(queryString)` dentro do método `query` da classe `Database` com uma verificação de variável de ambiente (ex: `if (process.env.NODE_ENV === 'development')`).
+
+### 4. Uso Correto de `req.query` para Requisições GET
+
+*   **Impacto:** Médio. Garante a conformidade com as boas práticas de API REST e evita problemas com caching/proxies.
+*   **Ação Sugerida:** Nas classes de controle (`Challenges.js` e `Authentication.js`), substituir o uso de `req.body` por `req.query` em todos os métodos que respondem a requisições GET (ex: `getSuggested`, `getUserChallenges`).
+
+### 5. Middleware de Autenticação Centralizado
+
+*   **Impacto:** Alto. Centraliza a lógica de segurança e garante que todas as rotas protegidas sejam verificadas automaticamente.
+*   **Ação Sugerida:** Implementar um middleware de autenticação (ex: `auth.verifyToken`) e aplicá-lo globalmente ou a grupos de rotas protegidas no `Server.js` (ex: `app.use('/api/challenges', auth.verifyToken.bind(auth))`).
+
+### 6. Logging de Erros na Função `placeholder`
+
+*   **Impacto:** Baixo. Evita o log de dados potencialmente sensíveis em ambientes de produção.
+*   **Ação Sugerida:** Proteger o `console.log` dentro da função `placeholder` em `Server.js` com uma verificação de variável de ambiente.
+
+### 7. Uso de HTTPS em Produção
+
+*   **Impacto:** Crítico (em produção). Garante a segurança da comunicação entre cliente e servidor, protegendo dados sensíveis.
+*   **Ação Sugerida:** Para ambientes de produção, configurar o servidor para usar HTTPS, idealmente através de um proxy reverso (ex: Nginx).
