@@ -11,11 +11,8 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
-import com.ifmg.a21dayschallangeapp.StatsModel;
 
 import org.json.JSONObject;
-import org.json.JSONArray;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;

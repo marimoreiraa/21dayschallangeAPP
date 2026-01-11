@@ -12,8 +12,7 @@ import okhttp3.Response;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://10.0.2.2:3100/api"; // emulador Android -> localhost
-
+    private static final String BASE_URL = "http://10.0.2.2:3100/api";
     public static JSONObject post(android.content.Context context, String endpoint, String jsonBody) {
 
         Log.i("mylog.ApiClient,post", BASE_URL + endpoint);
@@ -79,6 +78,34 @@ public class ApiClient {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public static JSONObject delete(android.content.Context context, String endpoint) {
+        Log.i("mylog.ApiClient.delete", BASE_URL + endpoint);
+
+        try {
+            OkHttpClient client = new OkHttpClient();
+
+            Request.Builder builder = new Request.Builder()
+                    .url(BASE_URL + endpoint)
+                    .delete(); // Define o método como DELETE
+
+            String token = SessionManager.getToken(context);
+            if (token != null) {
+                builder.addHeader("Authorization", "Bearer " + token);
+            }
+
+            Request request = builder.build();
+            Response response = client.newCall(request).execute();
+
+            String responseBody = response.body().string();
+            JSONObject json = new JSONObject(responseBody);
+
+            return json;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

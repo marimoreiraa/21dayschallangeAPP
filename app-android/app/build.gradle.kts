@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.ifmg.a21dayschallangeapp"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.ifmg.a21dayschallangeapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true

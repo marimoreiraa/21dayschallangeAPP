@@ -17,7 +17,6 @@ public class AuthController {
 
             JSONObject response = ApiClient.post(context,"/auth/login", body.toString());
             if (response.optInt("code") == 200 && response.has("token")) {
-                // **PASSO CRUCIAL: Salvar o token JWT**
                 String jwtToken = response.getString("token");
                 SessionManager.saveToken(context, jwtToken); // Usaremos o TokenManager
                 return true;
@@ -30,41 +29,33 @@ public class AuthController {
             return false;
         }
     }
-    public boolean register(android.content.Context context, String name, String email, String password) {
+    public boolean register(android.content.Context context, String name, String email, String password, String resposta) {
         try {
             JSONObject body = new JSONObject();
-            body.put("username",name);
+            body.put("username", name);
             body.put("email", email);
             body.put("password", hashPassword(password));
+            body.put("recoveryAnswer", hashPassword(resposta.toLowerCase().trim()));
 
             JSONObject response = ApiClient.post(context, "/auth/register", body.toString());
-
-            Log.i("mylog.AuthController.register", body.toString());
-
-            if (response == null) {
-                Log.e("mylog.AuthController.register", "Resposta do servidor nula.");
-                return false;
-            }
-
-            Log.i("mylog.AuthController.register", response.toString(2));
-
-            return (response.getInt("code") == 200);
-
+            return (response != null && response.getInt("code") == 200);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
-    public boolean requestPasswordReset(android.content.Context context, String email) {
+
+    public boolean recoverPassword(android.content.Context context, String email, String resposta, String novaSenha) {
         try {
             JSONObject body = new JSONObject();
             body.put("email", email);
+            body.put("recoveryAnswer", hashPassword(resposta.toLowerCase().trim()));
+            body.put("newPassword", hashPassword(novaSenha));
 
-            JSONObject response = ApiClient.post(context, "/auth/reset-password-request", body.toString());
+            JSONObject response = ApiClient.post(context, "/auth/recover", body.toString());
 
             if (response == null) return false;
 
-            return response.optBoolean("success", false);
+            return (response.optInt("code") == 200);
 
         } catch (Exception e) {
             e.printStackTrace();

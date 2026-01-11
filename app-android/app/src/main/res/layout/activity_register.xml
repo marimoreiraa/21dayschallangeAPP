@@ -114,20 +114,31 @@
         app:layout_constraintStart_toStartOf="@id/inputEmail"
         app:layout_constraintEnd_toEndOf="@id/inputEmail" />
 
-    <!-- Campo Data de Nascimento -->
+    <EditText
+        android:id="@+id/inputRespostaRecuperacao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Resposta de segurança (nome do seu pet)"
+        android:background="@drawable/edit_text_background"
+        android:padding="14dp"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/inputSenha"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@id/inputSenha"
+        app:layout_constraintEnd_toEndOf="@id/inputSenha" />
 
-    <!-- Botão Registrar -->
     <Button
         android:id="@+id/btnRegistrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/orange"
-        android:paddingVertical="1dp"
         android:text="Registrar"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/inputSenha"
-        app:layout_constraintStart_toStartOf="@+id/inputSenha"
-        app:layout_constraintTop_toBottomOf="@+id/inputSenha" />
+        app:layout_constraintEnd_toEndOf="@+id/inputRespostaRecuperacao"
+        app:layout_constraintStart_toStartOf="@+id/inputRespostaRecuperacao"
+        app:layout_constraintTop_toBottomOf="@+id/inputRespostaRecuperacao" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

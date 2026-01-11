@@ -3,6 +3,7 @@ const User = require("./User")
 const HttpResponse = require('./HttpResponse')
 
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto');
 
 class Account {
 
@@ -14,7 +15,7 @@ class Account {
     }
 
     async #validateRegistrationPayload(data) {
-        return (data && data.email && data.username && data.password)
+        return (data && data.email && data.username && data.password && data.recoveryAnswer)
     }
 
     async #validateLoginPayload(data) {
@@ -86,8 +87,87 @@ class Account {
 
     }
 
-    async resetPassword(req, res){
+    async recoverPassword(req, res) {
+        const { email, recoveryAnswer, newPassword } = req.body;
 
+        let user = await this.#database.read('users', 'id, recovery_answer', `email = '${email}'`);
+
+        if (user && user.length > 0) {
+            const hashNoBanco = user[0].recovery_answer.trim();
+            const hashRecebido = recoveryAnswer.trim();
+
+            if (hashNoBanco === hashRecebido) {
+                await this.#database.update('users', 'password', newPassword, `id = ${user[0].id}`);
+                return HttpResponse.sendMessage(res, 200, "Sucesso");
+            }
+        }
+        console.log("Banco:", user[0].recovery_answer);
+        console.log("Recebido:", recoveryAnswer);
+        return HttpResponse.sendMessage(res, 400, "Dados inválidos.");
+    }
+
+    async getUserProfile(req, res) {
+        let userId = await this.validate(req.header('Authorization'));
+
+        if (!userId) {
+            return HttpResponse.sendMessage(res, 401, "Unauthorized");
+        }
+
+        try {
+            
+            let userResult = await this.#database.read('users', 'username, email', `id = ${userId}`);
+
+            if (!userResult || userResult.length === 0) {
+                return HttpResponse.sendMessage(res, 404, "User not found");
+            }
+
+            const payload = {
+                user: {
+                    name: userResult[0].username,
+                    email: userResult[0].email
+                }
+            };
+            
+            return HttpResponse.sendPayload(res, 200, payload);
+
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+            return HttpResponse.sendMessage(res, 500, "Internal server error");
+        }
+    }
+
+    async changePassword(req, res) {
+        let userId = await this.validate(req.header('Authorization'));
+        if (!userId) return HttpResponse.sendMessage(res, 401, "Unauthorized");
+
+        const { currentPassword, newPassword } = req.body;
+
+        let userResult = await this.#database.read('users', 'password', `id = ${userId}`);
+        const senhaHashNoBanco = userResult[0].password.trim();
+
+        const senhaDigitadaHash = crypto.createHash('sha256').update(currentPassword).digest('hex');
+
+        if (senhaHashNoBanco !== senhaDigitadaHash) {
+            return HttpResponse.sendMessage(res, 400, "Senha atual incorreta");
+        }
+
+        const novaSenhaHash = crypto.createHash('sha256').update(newPassword).digest('hex');
+        await this.#database.update('users', 'password', novaSenhaHash, `id = ${userId}`);
+        
+        return HttpResponse.sendMessage(res, 200, "Senha alterada com sucesso");
+    }
+
+    async deleteAccount(req, res) {
+        let userId = await this.validate(req.header('Authorization'));
+        if (!userId) return HttpResponse.sendMessage(res, 401, "Unauthorized");
+
+        const success = await this.#database.delete('users', `id = ${userId}`);
+        
+        if (success) {
+            return HttpResponse.sendMessage(res, 200, "Conta excluída com sucesso");
+        } else {
+            return HttpResponse.sendMessage(res, 500, "Erro ao excluir conta");
+        }
     }
 
     

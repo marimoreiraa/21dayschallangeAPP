@@ -25,10 +25,12 @@ class User {
     }
 
     async create(data) {
+
         let payload = {
             email: data.email,
             password: data.password,
             username: data.username,
+            recovery_answer: data.recoveryAnswer
         }
 
         if (await this.#database.create(this.#table, Object.keys(payload), Object.values(payload)))

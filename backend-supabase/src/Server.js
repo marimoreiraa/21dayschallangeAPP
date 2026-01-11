@@ -16,7 +16,7 @@ app.use(express.json())
 app.post(`/api/auth/register`, auth.register.bind(auth))
 app.post(`/api/auth/login`, auth.login.bind(auth))
 app.post(`/api/auth/refresh`, auth.refreshLogin.bind(auth))
-
+app.post('/api/auth/recover', auth.recoverPassword.bind(auth));
 /* Challenges */
 app.get('/api/challenges/suggested', challenges.getSuggested.bind(challenges))
 app.post('/api/challenges/add', challenges.addChallenge.bind(challenges))
@@ -28,6 +28,9 @@ app.get('/api/challenges/progress', challenges.getProgressHistory.bind(challenge
 app.get('/api/challenges/notifications', challenges.getNotifications.bind(challenges))
 app.get('/api/challenges/stats/:challengeId', (req, res) => challenges.getChallengeStats(req, res));
 app.get('/api/challenges/overall-progress', (req, res) => challenges.getOverallProgress(req, res));
+app.get('/api/auth/me', auth.getUserProfile.bind(auth));
+app.post('/api/auth/change-password', auth.changePassword.bind(auth));
+app.delete('/api/auth/delete-account', auth.deleteAccount.bind(auth));
 
 /* Cacth All */
 app.all(/.*/, placeholder)

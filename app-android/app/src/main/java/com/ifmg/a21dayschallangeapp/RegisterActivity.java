@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText edtNome, edtEmail, edtSenha;
+    private EditText edtNome, edtEmail, edtSenha, edtResposta;
     private Button btnRegistrar;
 
     @Override
@@ -20,25 +20,19 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Inicialização dos campos
         edtNome = findViewById(R.id.inputNome);
         edtEmail = findViewById(R.id.inputEmail);
         edtSenha = findViewById(R.id.inputSenha);
+        edtResposta = findViewById(R.id.inputRespostaRecuperacao);
         btnRegistrar = findViewById(R.id.btnRegistrar);
 
         ImageView btnVoltar = findViewById(R.id.btnVoltar);
         TextView textLoginAqui = findViewById(R.id.textLoginAqui);
 
-        btnVoltar.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        btnVoltar.setOnClickListener(v -> finish());
 
-        textLoginAqui.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        textLoginAqui.setOnClickListener(v -> finish());
 
         AuthController authController = new AuthController();
 
@@ -46,21 +40,22 @@ public class RegisterActivity extends AppCompatActivity {
             String nome = edtNome.getText().toString().trim();
             String email = edtEmail.getText().toString().trim();
             String senha = edtSenha.getText().toString().trim();
+            String resposta = edtResposta.getText().toString().trim();
 
-            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty() || resposta.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             new Thread(() -> {
-                boolean success = authController.register(this,nome, email, senha);
+                boolean success = authController.register(this, nome, email, senha, resposta);
 
                 runOnUiThread(() -> {
                     if (success) {
-                        Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                        finish(); // volta para Login
+                        Toast.makeText(this, "Cadastro realizado!", Toast.LENGTH_SHORT).show();
+                        finish();
                     } else {
-                        Toast.makeText(this, "Erro ao cadastrar (email já usado?)", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Erro ao cadastrar", Toast.LENGTH_SHORT).show();
                     }
                 });
             }).start();
